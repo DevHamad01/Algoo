@@ -1,73 +1,76 @@
-# Welcome to your Lovable project
+# Algoo - Path Quest Viz 🚀
 
-## Project info
+**Algoo** is a professional algorithm visualization platform designed to help students and developers master pathfinding algorithms through interactive, real-time visual experiences.
 
-**URL**: https://lovable.dev/projects/7b1e36b7-6c70-42a6-b324-d357f420942b
+![Hero Image](file:///public/hero_illustration.png)
 
-## How can I edit this code?
+## 🌟 Features
 
-There are several ways of editing your application.
+- **Interactive Grid**: Place walls, move start and end nodes, and watch algorithms navigate obstacles.
+- **Real-time Visualization**: Control the speed of the search from slow-motion to instant.
+- **Multiple Algorithms**:
+  - **Dijkstra's Algorithm**: Guarantees the shortest path in weighted/unweighted grids.
+  - **A* Search**: Uses heuristics for optimal and efficient pathfinding.
+  - **Breadth-First Search (BFS)**: Explores nodes level by level.
+  - **Greedy Best-First**: Fast heuristic search focusing on the goal.
+- **Code Sidebar**: See the logic behind the algorithms while they run.
+- **Learning Hub**: Dedicated sections for learning the theory and tutorials.
+- **User Dashboard**: Track your learning progress and saved visualizations.
 
-**Use Lovable**
+## 🛠️ Tech Stack
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/7b1e36b7-6c70-42a6-b324-d357f420942b) and start prompting.
+- **Frontend**: [React](https://reactjs.org/) + [Vite](https://vitejs.dev/)
+- **Language**: [TypeScript](https://www.typescriptlang.org/)
+- **Styling**: [Tailwind CSS](https://tailwindcss.com/)
+- **UI Components**: [shadcn/ui](https://ui.shadcn.com/)
+- **Icons**: [Lucide React](https://lucide.dev/)
+- **State Management**: React Hooks & Context API
+- **Backend / Auth**: [Firebase](https://firebase.google.com/)
+- **Animations**: [Tailwind Animations](https://github.com/jamiebuilds/tailwindcss-animate)
 
-Changes made via Lovable will be committed automatically to this repo.
+## 🚀 Getting Started
 
-**Use your preferred IDE**
+### Prerequisites
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
+- [Node.js](https://nodejs.org/) (v18 or higher recommended)
+- [npm](https://www.npmjs.com/) or [Bun](https://bun.sh/)
 
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
+### Installation
 
-Follow these steps:
+1. **Clone the repository**
+   ```bash
+   git clone <YOUR_GIT_URL>
+   cd path-quest-viz
+   ```
 
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
+2. **Install dependencies**
+   ```bash
+   npm install
+   # or
+   bun install
+   ```
 
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
+3. **Set up Environment Variables**
+   Create a `.env` file based on `.env.example` and add your Firebase configurations.
 
-# Step 3: Install the necessary dependencies.
-npm i
+4. **Start the development server**
+   ```bash
+   npm run dev
+   ```
+   The app will be available at `http://localhost:5173`.
 
-# Step 4: Start the development server with auto-reloading and an instant preview.
-npm run dev
-```
+## 📂 Project Structure
 
-**Edit a file directly in GitHub**
+- `src/algorithms`: Core logic for pathfinding algorithms (Dijkstra, A*, BFS, Greedy).
+- `src/components`: Reusable UI components (Grid, Controls, Legend).
+- `src/pages`: Main application views (Home, Visualizer, Dashboard, Learn).
+- `src/utils`: Helper functions for grid manipulation and path calculations.
+- `src/contexts`: Authentication and global state management.
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+## 👨‍💻 Author
 
-**Use GitHub Codespaces**
+Built with ❤️ by **Hamad**.
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+## ⚖️ License
 
-## What technologies are used for this project?
-
-This project is built with:
-
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
-
-## How can I deploy this project?
-
-Simply open [Lovable](https://lovable.dev/projects/7b1e36b7-6c70-42a6-b324-d357f420942b) and click on Share -> Publish.
-
-## Can I connect a custom domain to my Lovable project?
-
-Yes, you can!
-
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
-
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/features/custom-domain#custom-domain)
+This project is open-source. See the project settings for license details.
