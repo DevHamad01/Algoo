@@ -1,0 +1,141 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Definition of the design system. All colors, gradients, fonts, etc should be defined here. 
+All colors MUST be HSL.
+*/
+
+@layer base {
+  :root {
+    --background: 0 0% 98%;
+    --foreground: 222 47% 11%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 222 47% 11%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 222 47% 11%;
+
+    --primary: 217 91% 60%;
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 210 40% 96%;
+    --secondary-foreground: 222 47% 11%;
+
+    --muted: 210 40% 96%;
+    --muted-foreground: 215 16% 47%;
+
+    --accent: 217 91% 60%;
+    --accent-foreground: 0 0% 100%;
+
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 214 32% 91%;
+    --input: 214 32% 91%;
+    --ring: 217 91% 60%;
+
+    --radius: 0.5rem;
+
+    /* Pathfinding specific colors */
+    --node-start: 142 71% 45%;
+    --node-end: 0 72% 51%;
+    --node-wall: 215 28% 17%;
+    --node-visited: 217 91% 85%;
+    --node-path: 45 93% 47%;
+    --node-current: 280 100% 70%;
+    --grid-bg: 0 0% 100%;
+
+    /* Animations */
+    --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-fast: all 0.15s ease;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground antialiased;
+  }
+}
+
+@layer components {
+  .cell {
+    @apply border border-border transition-all duration-150;
+  }
+
+  .cell-unvisited {
+    @apply bg-grid-bg hover:bg-secondary/30;
+  }
+
+  .cell-start {
+    @apply bg-[hsl(var(--node-start))];
+  }
+
+  .cell-end {
+    @apply bg-[hsl(var(--node-end))];
+  }
+
+  .cell-wall {
+    @apply bg-[hsl(var(--node-wall))];
+  }
+
+  .cell-visited {
+    @apply bg-[hsl(var(--node-visited))] animate-fade-in border-[hsl(var(--node-visited))]/30;
+  }
+
+  .cell-path {
+    @apply bg-[hsl(var(--node-path))] animate-scale-in border-[hsl(var(--node-path))]/50;
+  }
+
+  .cell-current {
+    @apply bg-[hsl(var(--node-current))] animate-pulse;
+  }
+}
+
+@layer utilities {
+  @keyframes fade-in {
+    from {
+      opacity: 0;
+      transform: scale(0.8);
+    }
+    to {
+      opacity: 1;
+      transform: scale(1);
+    }
+  }
+
+  @keyframes scale-in {
+    0% {
+      transform: scale(0.5);
+    }
+    50% {
+      transform: scale(1.2);
+    }
+    100% {
+      transform: scale(1);
+    }
+  }
+
+  .animate-fade-in {
+    animation: fade-in 0.3s ease-out;
+  }
+
+  .animate-scale-in {
+    animation: scale-in 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+
+  .hover-scale {
+    @apply transition-transform duration-200 hover:scale-105;
+  }
+
+  .bg-grid-pattern {
+    background-image: linear-gradient(hsl(var(--border)) 1px, transparent 1px),
+      linear-gradient(90deg, hsl(var(--border)) 1px, transparent 1px);
+    background-size: 50px 50px;
+  }
+}
