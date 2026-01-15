@@ -34,9 +34,9 @@ export const Navbar = () => {
     <nav className="bg-white border-b border-gray-200 sticky top-0 z-50 backdrop-blur-sm bg-white/95">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
-          {/* Logo */}
+          { }
           <NavLink to="/" className="flex items-center gap-2 hover:opacity-80 transition-opacity">
-            <Compass className="w-8 h-8 text-black" />
+            <img src="/public/logo.png" alt="Algoo Logo" className="w-8 h-8 object-contain" />
             <span className="text-xl font-bold text-black">Algoo</span>
           </NavLink>
 
@@ -77,7 +77,7 @@ export const Navbar = () => {
               ) : (
                 <>
                   <NavLink to="/login">
-                    <Button variant="ghost" size="sm" className="hover:bg-gray-100">
+                    <Button variant="ghost" size="sm" className="hover:bg-gray-100 hover:text-black">
                       <LogIn className="w-4 h-4 mr-2" />
                       Login
                     </Button>
