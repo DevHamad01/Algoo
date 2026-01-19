@@ -108,7 +108,7 @@ export const Controls = ({
           <Play className="w-4 h-4" />
           Visualize
         </Button>
-        
+
         <Button
           onClick={onClearPath}
           disabled={isVisualizing}

@@ -9,6 +9,7 @@ import { Navbar } from "@/components/Navbar";
 import Home from "./pages/Home";
 import Dashboard from "./pages/Dashboard";
 import Visualizer from "./pages/Visualizer";
+import Sorting from "./pages/visualizers/Sorting";
 import Learn from "./pages/Learn";
 import AlgorithmDetail from "./pages/AlgorithmDetail";
 import Tutorials from "./pages/Tutorials";
@@ -41,6 +42,7 @@ const App = () => (
 
             {/* Public Visualizer (for demo) */}
             <Route path="/visualizer" element={<Visualizer />} />
+            <Route path="/visualizers/sorting" element={<Sorting />} />
 
             {/* Protected Routes */}
             <Route

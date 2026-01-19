@@ -38,7 +38,7 @@ const Visualizer = () => {
 
   const handleMouseDown = (row: number, col: number) => {
     const cell = grid[row][col];
-    
+
     if (cell.type === "start") {
       setIsDraggingStart(true);
     } else if (cell.type === "end") {
@@ -74,16 +74,16 @@ const Visualizer = () => {
   const toggleWall = (currentGrid: Cell[][], row: number, col: number): Cell[][] => {
     const newGrid = currentGrid.map((r) => [...r]);
     const cell = newGrid[row][col];
-    
+
     if (cell.type === "start" || cell.type === "end") return newGrid;
-    
+
     cell.type = cell.type === "wall" ? "unvisited" : "wall";
     return newGrid;
   };
 
   const moveStartNode = (currentGrid: Cell[][], row: number, col: number): Cell[][] => {
     const newGrid = currentGrid.map((r) => r.map((c) => ({ ...c })));
-    
+
     for (let r = 0; r < newGrid.length; r++) {
       for (let c = 0; c < newGrid[r].length; c++) {
         if (newGrid[r][c].type === "start") {
@@ -91,17 +91,17 @@ const Visualizer = () => {
         }
       }
     }
-    
+
     if (newGrid[row][col].type !== "end" && newGrid[row][col].type !== "wall") {
       newGrid[row][col].type = "start";
     }
-    
+
     return newGrid;
   };
 
   const moveEndNode = (currentGrid: Cell[][], row: number, col: number): Cell[][] => {
     const newGrid = currentGrid.map((r) => r.map((c) => ({ ...c })));
-    
+
     for (let r = 0; r < newGrid.length; r++) {
       for (let c = 0; c < newGrid[r].length; c++) {
         if (newGrid[r][c].type === "end") {
@@ -109,11 +109,11 @@ const Visualizer = () => {
         }
       }
     }
-    
+
     if (newGrid[row][col].type !== "start" && newGrid[row][col].type !== "wall") {
       newGrid[row][col].type = "end";
     }
-    
+
     return newGrid;
   };
 
@@ -152,7 +152,7 @@ const Visualizer = () => {
     }
 
     await animateAlgorithm(result.visitedNodesInOrder, result.shortestPath);
-    
+
     if (result.shortestPath.length === 0) {
       toast.error("No path found due to obstacles!");
     } else {
@@ -165,12 +165,12 @@ const Visualizer = () => {
   const animateAlgorithm = async (visitedNodes: Cell[], shortestPath: Cell[]) => {
     for (let i = 0; i < visitedNodes.length; i++) {
       await new Promise((resolve) => setTimeout(resolve, speedDelays[speed]));
-      
+
       setGrid((prevGrid) => {
         const newGrid = prevGrid.map((row) => [...row]);
         const node = visitedNodes[i];
-        if (newGrid[node.row][node.col].type !== "start" && 
-            newGrid[node.row][node.col].type !== "end") {
+        if (newGrid[node.row][node.col].type !== "start" &&
+          newGrid[node.row][node.col].type !== "end") {
           newGrid[node.row][node.col].type = "visited";
           newGrid[node.row][node.col].visitOrder = i + 1;
         }
@@ -180,12 +180,12 @@ const Visualizer = () => {
 
     for (let i = 0; i < shortestPath.length; i++) {
       await new Promise((resolve) => setTimeout(resolve, 50));
-      
+
       setGrid((prevGrid) => {
         const newGrid = prevGrid.map((row) => [...row]);
         const node = shortestPath[i];
-        if (newGrid[node.row][node.col].type !== "start" && 
-            newGrid[node.row][node.col].type !== "end") {
+        if (newGrid[node.row][node.col].type !== "start" &&
+          newGrid[node.row][node.col].type !== "end") {
           newGrid[node.row][node.col].type = "path";
           newGrid[node.row][node.col].pathOrder = i + 1;
         }

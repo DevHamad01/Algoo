@@ -15,6 +15,7 @@ export const Navbar = () => {
   const navItems = [
     { to: "/", label: "Home" },
     { to: "/visualizer", label: "Visualizer" },
+    { to: "/visualizers/sorting", label: "Sorting" },
     { to: "/learn", label: "Learn" },
     { to: "/tutorials", label: "Tutorials" },
     { to: "/about", label: "About" },
