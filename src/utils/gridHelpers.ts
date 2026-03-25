@@ -1,20 +1,28 @@
 import { Cell, CellType } from "@/types/pathfinding";
 
-export const GRID_ROWS = 20;
-export const GRID_COLS = 50;
-export const START_NODE_ROW = 10;
-export const START_NODE_COL = 10;
-export const END_NODE_ROW = 10;
-export const END_NODE_COL = 40;
+export const getGridDimensions = () => {
+  const width = typeof window !== "undefined" ? window.innerWidth : 1024;
+  if (width < 640) {
+    // Mobile
+    return { rows: 20, cols: 15, startRow: 2, startCol: 7, endRow: 17, endCol: 7 };
+  }
+  if (width < 1024) {
+    // Tablet
+    return { rows: 35, cols: 15, startRow: 4, startCol: 7, endRow: 30, endCol: 7 };
+  }
+  // Desktop
+  return { rows: 20, cols: 50, startRow: 10, startCol: 10, endRow: 10, endCol: 40 };
+};
 
 export const createInitialGrid = (): Cell[][] => {
+  const { rows, cols, startRow, startCol, endRow, endCol } = getGridDimensions();
   const grid: Cell[][] = [];
-  for (let row = 0; row < GRID_ROWS; row++) {
+  for (let row = 0; row < rows; row++) {
     const currentRow: Cell[] = [];
-    for (let col = 0; col < GRID_COLS; col++) {
+    for (let col = 0; col < cols; col++) {
       let type: CellType = "unvisited";
-      if (row === START_NODE_ROW && col === START_NODE_COL) type = "start";
-      if (row === END_NODE_ROW && col === END_NODE_COL) type = "end";
+      if (row === startRow && col === startCol) type = "start";
+      if (row === endRow && col === endCol) type = "end";
 
       currentRow.push({
         row,
@@ -33,11 +41,13 @@ export const createInitialGrid = (): Cell[][] => {
 export const getNeighbors = (cell: Cell, grid: Cell[][]): Cell[] => {
   const neighbors: Cell[] = [];
   const { row, col } = cell;
+  const numRows = grid.length;
+  const numCols = grid[0].length;
 
   if (row > 0) neighbors.push(grid[row - 1][col]); // Up
-  if (row < GRID_ROWS - 1) neighbors.push(grid[row + 1][col]); // Down
+  if (row < numRows - 1) neighbors.push(grid[row + 1][col]); // Down
   if (col > 0) neighbors.push(grid[row][col - 1]); // Left
-  if (col < GRID_COLS - 1) neighbors.push(grid[row][col + 1]); // Right
+  if (col < numCols - 1) neighbors.push(grid[row][col + 1]); // Right
 
   return neighbors.filter((neighbor) => neighbor.type !== "wall");
 };

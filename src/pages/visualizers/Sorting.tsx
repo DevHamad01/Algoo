@@ -12,34 +12,23 @@ import {
 import { AnimationStep } from "@/algorithms/sorting/types";
 import { toast } from "sonner";
 
-// Sound helper
-const playNote = (freq: number) => {
-    try {
-        const audioCtx = new (window.AudioContext || (window as any).webkitAudioContext)();
-        const oscillator = audioCtx.createOscillator();
-        const gainNode = audioCtx.createGain();
-
-        oscillator.type = "sine";
-        oscillator.frequency.value = freq;
-
-        gainNode.gain.setValueAtTime(0.1, audioCtx.currentTime);
-        gainNode.gain.exponentialRampToValueAtTime(0.00001, audioCtx.currentTime + 0.1);
-
-        oscillator.connect(gainNode);
-        gainNode.connect(audioCtx.destination);
-
-        oscillator.start();
-        oscillator.stop(audioCtx.currentTime + 0.1);
-    } catch (e) {
-        console.error("Audio play failed", e);
-    }
-};
-
 const Sorting = () => {
+    const getDeviceLimits = () => {
+        if (typeof window === "undefined") return { max: 50, isMobile: false };
+        if (window.innerWidth < 640) return { max: 10, isMobile: true };
+        if (window.innerWidth < 1024) return { max: 30, isMobile: false };
+        return { max: 50, isMobile: false };
+    };
+
     // State
     const [array, setArray] = useState<number[]>([]);
     const [algorithm, setAlgorithm] = useState<SortingAlgorithmType>("bubble");
-    const [arraySize, setArraySize] = useState(50);
+    const [arraySize, setArraySize] = useState(() => {
+        const limits = getDeviceLimits();
+        if (limits.isMobile) return 10;
+        if (limits.max < 50) return limits.max; // e.g., default tablet max to 30
+        return 50;
+    });
     const [speed, setSpeed] = useState(100); // ms delay
     const [isSorting, setIsSorting] = useState(false);
 
@@ -51,8 +40,37 @@ const Sorting = () => {
 
     // Toggles
     const [showNumbers, setShowNumbers] = useState(false);
-    const [showComparisons, setShowComparisons] = useState(true); // Default true
-    const [playSound, setPlaySound] = useState(false);
+    const [showComparisons, setShowComparisons] = useState(true);
+
+    const [deviceLimits, setDeviceLimits] = useState(getDeviceLimits());
+
+    useEffect(() => {
+        const handleResize = () => {
+            const limits = getDeviceLimits();
+            setDeviceLimits(limits);
+            setArraySize(prev => {
+                let newSize = prev;
+                if (limits.isMobile) newSize = 10;
+                else if (prev > limits.max) newSize = limits.max;
+
+                if (newSize !== prev) {
+                    // Update visual array elements directly to match the forced change
+                    const newArray = [];
+                    for (let i = 0; i < newSize; i++) {
+                        newArray.push(Math.floor(Math.random() * 496) + 5);
+                    }
+                    setArray(newArray);
+                    setSortedIndices([]);
+                    setComparingIndices([]);
+                    setSwappingIndices([]);
+                    setOverwriteIndex(null);
+                }
+                return newSize;
+            });
+        };
+        window.addEventListener('resize', handleResize);
+        return () => window.removeEventListener('resize', handleResize);
+    }, []);
 
     // Refs for control during async loop
     const sortingRef = useRef(false);
@@ -147,19 +165,6 @@ const Sorting = () => {
             if (step.type === "compare") {
                 if (showComparisons) {
                     setComparingIndices(step.indices);
-                    if (playSound) {
-                        // Play sound based on value? Or just a blip?
-                        // A nice touch is mapping value to frequency.
-                        // We need the values. We can look them up in current 'array' state?
-                        // BUT 'array' state might lag if we update it too frequently? 
-                        // Actually 'array' is in state.
-                        // Optimization: We are updating array state for swaps/overwrites.
-                        // So array[step.indices[0]] should be correct.
-                        const val = array[step.indices[0]];
-                        // Map 5-500 to 200Hz-800Hz
-                        const freq = 200 + (val || 0);
-                        playNote(freq);
-                    }
                 }
             } else if (step.type === "swap") {
                 setSwappingIndices(step.indices);
@@ -229,7 +234,8 @@ const Sorting = () => {
                     isSorting={isSorting}
                     showNumbers={showNumbers}
                     showComparisons={showComparisons}
-                    playSound={playSound}
+                    isMobile={deviceLimits.isMobile}
+                    maxArraySize={deviceLimits.max}
                     onAlgorithmChange={setAlgorithm}
                     onArraySizeChange={handleArraySizeChange}
                     onSpeedChange={setSpeed}
@@ -238,7 +244,6 @@ const Sorting = () => {
                     onStop={stopSorting}
                     onToggleShowNumbers={setShowNumbers}
                     onToggleShowComparisons={setShowComparisons}
-                    onTogglePlaySound={setPlaySound}
                 />
 
                 {/* VISUALIZATION AREA */}

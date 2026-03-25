@@ -12,7 +12,7 @@ interface GridCellProps {
 
 export const GridCell = ({ cell, onMouseDown, onMouseEnter, onMouseUp, showNodeDistance }: GridCellProps) => {
   const getCellClassName = () => {
-    const baseClasses = "cell w-6 h-6 cursor-pointer relative flex items-center justify-center";
+    const baseClasses = "cell w-5 h-5 sm:w-6 sm:h-6 flex-shrink-0 cursor-pointer relative flex items-center justify-center";
     
     switch (cell.type) {
       case "start":

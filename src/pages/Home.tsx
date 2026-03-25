@@ -233,10 +233,7 @@ const Home = () => {
           </div>
         </div>
 
-        {/* Scroll Indicator */}
-        <div className="absolute bottom-8 left-1/2 -translate-x-1/2 animate-bounce">
-          <ChevronDown className="w-8 h-8 text-gray-400" />
-        </div>
+        {/* Scroll Indicator Removed as requested */}
       </section>
 
       {/* 2. SOCIAL PROOF - Monochrome */}
@@ -331,10 +328,10 @@ const Home = () => {
                   <div
                     key={i}
                     className={`aspect-square rounded-sm ${i === 22 ? "bg-white" :
-                        i === 77 ? "bg-gray-400" :
-                          [23, 24, 33, 43, 53, 63, 73].includes(i) ? "bg-gray-700" :
-                            [34, 44, 54, 64, 74, 75, 76].includes(i) ? "bg-gray-500" :
-                              "bg-gray-800"
+                      i === 77 ? "bg-gray-400" :
+                        [23, 24, 33, 43, 53, 63, 73].includes(i) ? "bg-gray-700" :
+                          [34, 44, 54, 64, 74, 75, 76].includes(i) ? "bg-gray-500" :
+                            "bg-gray-800"
                       }`}
                   />
                 ))}
@@ -363,12 +360,14 @@ const Home = () => {
                   </div>
                 ))}
               </div>
-              <Link to="/visualizer">
-                <Button className="h-14 px-8 bg-white text-black hover:bg-gray-200 text-lg font-semibold">
-                  Try Live Demo
-                  <ArrowRight className="w-5 h-5 ml-2" />
-                </Button>
-              </Link>
+              <div className="pt-4">
+                <Link to="/visualizer" className="inline-block mt-4">
+                  <Button className="h-14 px-8 bg-white text-black hover:bg-gray-200 text-lg font-semibold">
+                    Try Live Demo
+                    <ArrowRight className="w-5 h-5 ml-2" />
+                  </Button>
+                </Link>
+              </div>
             </div>
           </div>
         </div>
@@ -498,7 +497,7 @@ const Home = () => {
           </div>
 
           <div className="grid lg:grid-cols-2 gap-8">
-            <div className="bg-gray-900 rounded-2xl p-6 font-mono text-sm border border-gray-800">
+            <div className="bg-gray-900 rounded-2xl p-4 sm:p-6 font-mono text-sm border border-gray-800 overflow-hidden w-full max-w-full">
               <div className="flex items-center gap-2 mb-4">
                 <div className="flex gap-1.5">
                   <div className="w-3 h-3 rounded-full bg-gray-600"></div>
@@ -507,7 +506,7 @@ const Home = () => {
                 </div>
                 <span className="text-gray-500 text-xs ml-2">bfs.ts</span>
               </div>
-              <pre className="text-gray-300">
+              <pre className="text-gray-300 overflow-x-auto pb-2 text-xs sm:text-sm">
                 {`function bfs(grid, start, end) {
   const queue = [start];
   const visited = new Set();
@@ -535,10 +534,10 @@ const Home = () => {
                 {Array.from({ length: 64 }).map((_, i) => (
                   <div
                     key={i}
-                    className={`w-8 h-8 rounded ${i === 9 ? "bg-black" :
-                        i === 54 ? "bg-gray-400" :
-                          [10, 11, 18, 19, 26, 27].includes(i) ? "bg-gray-600" :
-                            "bg-gray-200"
+                    className={`w-6 h-6 sm:w-8 sm:h-8 rounded ${i === 9 ? "bg-black" :
+                      i === 54 ? "bg-gray-400" :
+                        [10, 11, 18, 19, 26, 27].includes(i) ? "bg-gray-600" :
+                          "bg-gray-200"
                       }`}
                   />
                 ))}
@@ -659,12 +658,12 @@ const Home = () => {
       </section>
 
       {/* 12. FOOTER - Monochrome */}
-      <footer className="bg-gray-900 text-white py-16 border-t border-gray-800">
+      <footer className="bg-black text-white py-12 sm:py-16 border-t border-gray-800">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-12 mb-12">
-            <div>
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-8 md:gap-12 mb-12">
+            <div className="col-span-2 md:col-span-1">
               <div className="flex items-center gap-2 mb-4">
-                <Target className="w-8 h-8" />
+                <img src="/public/logo.png" alt="Algoo Logo" className="w-8 h-8 object-contain brightness-1 invert" />
                 <h3 className="text-2xl font-bold">Algoo</h3>
               </div>
               <p className="text-gray-400 text-sm mb-4">

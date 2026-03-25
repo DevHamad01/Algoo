@@ -15,7 +15,8 @@ export interface SortingControlsProps {
     isSorting: boolean;
     showNumbers: boolean;
     showComparisons: boolean;
-    playSound: boolean;
+    isMobile?: boolean;
+    maxArraySize?: number;
     onAlgorithmChange: (algo: SortingAlgorithmType) => void;
     onArraySizeChange: (size: number) => void;
     onSpeedChange: (speed: number) => void;
@@ -24,7 +25,6 @@ export interface SortingControlsProps {
     onStop: () => void;
     onToggleShowNumbers: (show: boolean) => void;
     onToggleShowComparisons: (show: boolean) => void;
-    onTogglePlaySound: (play: boolean) => void;
 }
 
 const algorithms = [
@@ -43,7 +43,8 @@ export const SortingControls = ({
     isSorting,
     showNumbers,
     showComparisons,
-    playSound,
+    isMobile,
+    maxArraySize = 50,
     onAlgorithmChange,
     onArraySizeChange,
     onSpeedChange,
@@ -51,8 +52,7 @@ export const SortingControls = ({
     onSort,
     onStop,
     onToggleShowNumbers,
-    onToggleShowComparisons,
-    onTogglePlaySound
+    onToggleShowComparisons
 }: SortingControlsProps) => {
 
     return (
@@ -81,20 +81,22 @@ export const SortingControls = ({
                 </div>
 
                 {/* Array Size */}
-                <div className="flex flex-col gap-2 min-w-[150px] flex-1">
-                    <div className="flex justify-between items-center">
-                        <Label className="text-sm font-semibold text-muted-foreground">Array Size: {arraySize}</Label>
+                {!isMobile && (
+                    <div className="flex flex-col gap-2 min-w-[150px] flex-1">
+                        <div className="flex justify-between items-center">
+                            <Label className="text-sm font-semibold text-muted-foreground">Array Size: {arraySize}</Label>
+                        </div>
+                        <Slider
+                            value={[arraySize]}
+                            onValueChange={(val) => onArraySizeChange(val[0])}
+                            min={10}
+                            max={maxArraySize}
+                            step={1}
+                            disabled={isSorting}
+                            className="cursor-pointer"
+                        />
                     </div>
-                    <Slider
-                        value={[arraySize]}
-                        onValueChange={(val) => onArraySizeChange(val[0])}
-                        min={10}
-                        max={50}
-                        step={1}
-                        disabled={isSorting}
-                        className="cursor-pointer"
-                    />
-                </div>
+                )}
 
                 {/* Speed */}
                 <div className="flex flex-col gap-2 min-w-[150px] flex-1">
@@ -144,10 +146,6 @@ export const SortingControls = ({
                     <div className="flex items-center gap-2">
                         <Switch id="show-comparisons" checked={showComparisons} onCheckedChange={onToggleShowComparisons} />
                         <Label htmlFor="show-comparisons" className="text-sm font-medium cursor-pointer">Comparisons</Label>
-                    </div>
-                    <div className="flex items-center gap-2">
-                        <Switch id="play-sound" checked={playSound} onCheckedChange={onTogglePlaySound} />
-                        <Label htmlFor="play-sound" className="text-sm font-medium cursor-pointer">Sound</Label>
                     </div>
                 </div>
 
