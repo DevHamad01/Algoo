@@ -5,6 +5,8 @@ import {
     sendPasswordResetEmail,
     updateProfile,
     User as FirebaseUser,
+    GoogleAuthProvider,
+    signInWithPopup,
 } from "firebase/auth";
 import { auth } from "@/config/firebase";
 
@@ -39,6 +41,19 @@ class AuthService {
     async signIn(email: string, password: string): Promise<FirebaseUser> {
         try {
             const userCredential = await signInWithEmailAndPassword(auth, email, password);
+            return userCredential.user;
+        } catch (error: any) {
+            throw this.handleAuthError(error);
+        }
+    }
+
+    /**
+     * Sign in with Google
+     */
+    async signInWithGoogle(): Promise<FirebaseUser> {
+        try {
+            const provider = new GoogleAuthProvider();
+            const userCredential = await signInWithPopup(auth, provider);
             return userCredential.user;
         } catch (error: any) {
             throw this.handleAuthError(error);

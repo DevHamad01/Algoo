@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef, useCallback } from "react";
+import { useLocation } from "react-router-dom";
 import { SortingControls, SortingAlgorithmType } from "@/components/sorting/SortingControls";
 import { SortingBoard } from "@/components/sorting/SortingBoard";
 import {
@@ -13,6 +14,8 @@ import { AnimationStep } from "@/algorithms/sorting/types";
 import { toast } from "sonner";
 
 const Sorting = () => {
+    const location = useLocation();
+
     const getDeviceLimits = () => {
         if (typeof window === "undefined") return { max: 50, isMobile: false };
         if (window.innerWidth < 640) return { max: 10, isMobile: true };
@@ -71,6 +74,24 @@ const Sorting = () => {
         window.addEventListener('resize', handleResize);
         return () => window.removeEventListener('resize', handleResize);
     }, []);
+
+    useEffect(() => {
+        const queryParams = new URLSearchParams(location.search);
+        const algoParam = queryParams.get("algorithm");
+        if (algoParam) {
+            let mappedAlgo: SortingAlgorithmType | null = null;
+            if (algoParam === "bubble-sort" || algoParam === "bubble") mappedAlgo = "bubble";
+            else if (algoParam === "selection-sort" || algoParam === "selection") mappedAlgo = "selection";
+            else if (algoParam === "insertion-sort" || algoParam === "insertion") mappedAlgo = "insertion";
+            else if (algoParam === "merge-sort" || algoParam === "merge") mappedAlgo = "merge";
+            else if (algoParam === "quick-sort" || algoParam === "quick") mappedAlgo = "quick";
+            else if (algoParam === "heap-sort" || algoParam === "heap") mappedAlgo = "heap";
+
+            if (mappedAlgo) {
+                setAlgorithm(mappedAlgo);
+            }
+        }
+    }, [location.search]);
 
     // Refs for control during async loop
     const sortingRef = useRef(false);

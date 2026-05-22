@@ -2,7 +2,7 @@ export interface AlgorithmContent {
   id: string;
   title: string;
   description: string;
-  category: "pathfinding" | "graph" | "tree";
+  category: "pathfinding" | "graph" | "tree" | "sorting";
   difficulty: "beginner" | "intermediate" | "advanced";
   timeComplexity: string;
   spaceComplexity: string;
@@ -550,6 +550,315 @@ Floyd-Warshall is an all-pairs shortest path algorithm. It finds the shortest pa
 ❌ Slow for large graphs (O(V³))  
 ❌ High memory usage (O(V²))  
 ❌ Overkill if only need single-source paths  
+`
+  },
+  {
+    id: "bubble-sort",
+    title: "Bubble Sort",
+    description: "Repeatedly steps through the list, compares adjacent elements and swaps them if they are in the wrong order",
+    category: "sorting",
+    difficulty: "beginner",
+    timeComplexity: "O(N²)",
+    spaceComplexity: "O(1)",
+    content: `
+# Bubble Sort
+
+## What is Bubble Sort?
+
+Bubble Sort is a simple comparison-based sorting algorithm. It works by repeatedly stepping through the list, comparing adjacent elements, and swapping them if they are in the wrong order. This process is repeated until the list is fully sorted.
+
+The algorithm gets its name because smaller elements "bubble" to the top of the list, while larger elements sink to the bottom.
+
+## How It Works
+
+1. Starting at index 0, compare the element with its adjacent element at index 1.
+2. If the current element is greater than the next element, swap them.
+3. Move to the next pair of elements and repeat steps 1 & 2.
+4. Continue until the end of the array is reached. The largest element is now at its correct sorted position (the end).
+5. Repeat the entire process for the remaining unsorted elements until no swaps are needed.
+
+## Time & Space Complexity
+
+- **Worst-case Time Complexity:** O(N²) when the array is sorted in reverse order.
+- **Average-case Time Complexity:** O(N²).
+- **Best-case Time Complexity:** O(N) when the array is already sorted (using an optimized version).
+- **Space Complexity:** O(1) auxiliary space (in-place sorting).
+
+## Pseudocode
+
+\`\`\`
+function bubbleSort(array):
+    n = length(array)
+    for i = 0 to n - 1:
+        swapped = false
+        for j = 0 to n - i - 2:
+            if array[j] > array[j + 1]:
+                swap(array[j], array[j + 1])
+                swapped = true
+        if not swapped:
+            break
+    return array
+\`\`\`
+
+## Advantages
+
+✅ Extremely simple to understand and implement  
+✅ Sorts in-place (requires no extra memory)  
+✅ Stable sorting algorithm (preserves relative order of duplicate elements)  
+✅ Fast check for already sorted arrays (O(N) with optimized flag)  
+
+## Disadvantages
+
+❌ Highly inefficient on large datasets  
+❌ Performs a massive number of swaps compared to other algorithms  
+`
+  },
+  {
+    id: "selection-sort",
+    title: "Selection Sort",
+    description: "Repeatedly selects the minimum element from the unsorted part and moves it to the beginning",
+    category: "sorting",
+    difficulty: "beginner",
+    timeComplexity: "O(N²)",
+    spaceComplexity: "O(1)",
+    content: `
+# Selection Sort
+
+## What is Selection Sort?
+
+Selection Sort is an intuitive, in-place comparison sorting algorithm. It divides the input array into two parts: a sorted sublist at the left, and an unsorted sublist at the right. It repeatedly finds the smallest (or largest) element from the unsorted sublist and swaps it with the leftmost unsorted element, moving the boundary between the sorted and unsorted parts one element to the right.
+
+## How It Works
+
+1. Set the first unsorted element as the minimum.
+2. Search through the rest of the unsorted sublist to find the actual minimum element.
+3. Swap the minimum element found with the first unsorted element.
+4. Move the sorted boundary index one position right.
+5. Repeat steps 1–4 until the entire array is sorted.
+
+## Time & Space Complexity
+
+- **Worst-case Time Complexity:** O(N²).
+- **Average-case Time Complexity:** O(N²).
+- **Best-case Time Complexity:** O(N²). (It always scans the entire unsorted list regardless of initial ordering).
+- **Space Complexity:** O(1) auxiliary space (in-place sorting).
+
+## Pseudocode
+
+\`\`\`
+function selectionSort(array):
+    n = length(array)
+    for i = 0 to n - 2:
+        minIndex = i
+        for j = i + 1 to n - 1:
+            if array[j] < array[minIndex]:
+                minIndex = j
+        if minIndex != i:
+            swap(array[i], array[minIndex])
+    return array
+\`\`\`
+
+## Advantages
+
+✅ Simple to implement  
+✅ Performs minimal writes/swaps - exactly O(N) swaps, which is optimal for flash memory or hardware where write operations are costly  
+✅ In-place sorting (O(1) memory)  
+
+## Disadvantages
+
+❌ Inefficient for large datasets  
+❌ Average, worst, and best cases are all O(N²), showing no adaptability to partially sorted inputs  
+❌ Unstable sorting algorithm in its default swap-based implementation  
+`
+  },
+  {
+    id: "insertion-sort",
+    title: "Insertion Sort",
+    description: "Builds the sorted array one item at a time by inserting elements into their correct positions",
+    category: "sorting",
+    difficulty: "beginner",
+    timeComplexity: "O(N²)",
+    spaceComplexity: "O(1)",
+    content: `
+# Insertion Sort
+
+## What is Insertion Sort?
+
+Insertion Sort is a simple sorting algorithm that builds the final sorted array one item at a time. It works similarly to the way you sort playing cards in your hands: you take one card at a time and insert it into its correct position relative to the cards you already hold.
+
+## How It Works
+
+1. Assume the first element is already sorted.
+2. Take the next unsorted element (the "key").
+3. Compare the key with elements in the sorted sublist from right to left.
+4. Shift all sorted elements that are greater than the key to the right.
+5. Insert the key into its correct position.
+6. Repeat for all remaining elements.
+
+## Time & Space Complexity
+
+- **Worst-case Time Complexity:** O(N²) when elements are in reverse order.
+- **Average-case Time Complexity:** O(N²).
+- **Best-case Time Complexity:** O(N) when the array is already sorted.
+- **Space Complexity:** O(1) auxiliary space.
+
+## Pseudocode
+
+\`\`\`
+function insertionSort(array):
+    n = length(array)
+    for i = 1 to n - 1:
+        key = array[i]
+        j = i - 1
+        while j >= 0 and array[j] > key:
+            array[j + 1] = array[j]
+            j = j - 1
+        array[j + 1] = key
+    return array
+\`\`\`
+
+## Advantages
+
+✅ Simple and easy to understand  
+✅ Highly efficient for small datasets  
+✅ Adaptive - extremely fast for arrays that are already or partially sorted (O(N) time)  
+✅ Stable and in-place  
+✅ Online - can sort a list as it receives it  
+
+## Disadvantages
+
+❌ Highly inefficient for large arrays  
+❌ Requires shifting many elements, which can be expensive  
+`
+  },
+  {
+    id: "merge-sort",
+    title: "Merge Sort",
+    description: "Divide-and-conquer algorithm that recursively splits the array and merges sorted halves",
+    category: "sorting",
+    difficulty: "intermediate",
+    timeComplexity: "O(N log N)",
+    spaceComplexity: "O(N)",
+    content: `
+# Merge Sort
+
+## What is Merge Sort?
+
+Merge Sort is a highly efficient, comparison-based, sorting algorithm that uses a divide-and-conquer strategy. It recursively divides the input array into two halves, sorts them, and then merges the sorted halves into a single, fully-sorted array.
+
+## How It Works
+
+1. **Divide:** Split the unsorted array in half at its midpoint recursively until each subarray contains exactly one element (a single-element array is trivially sorted).
+2. **Conquer:** Sort the sub-arrays.
+3. **Combine:** Merge the sorted sub-arrays together by comparing the smallest elements of each sub-array and placing them in order into a new array.
+
+## Time & Space Complexity
+
+- **Worst-case Time Complexity:** O(N log N).
+- **Average-case Time Complexity:** O(N log N).
+- **Best-case Time Complexity:** O(N log N).
+- **Space Complexity:** O(N) auxiliary space (requires a temporary array to hold elements during merging).
+
+## Pseudocode
+
+\`\`\`
+function mergeSort(array):
+    if length(array) <= 1:
+        return array
+        
+    mid = length(array) / 2
+    left = mergeSort(array[0...mid-1])
+    right = mergeSort(array[mid...end])
+    
+    return merge(left, right)
+
+function merge(left, right):
+    result = []
+    while left is not empty and right is not empty:
+        if left[0] <= right[0]:
+            append left[0] to result
+            remove left[0]
+        else:
+            append right[0] to result
+            remove right[0]
+            
+    append remaining elements of left and right to result
+    return result
+\`\`\`
+
+## Advantages
+
+✅ Guaranteed O(N log N) worst-case time complexity  
+✅ Stable sorting algorithm  
+✅ Highly scalable for extremely large datasets (external sorting)  
+✅ Predictable performance (independent of initial data ordering)  
+
+## Disadvantages
+
+❌ Requires O(N) extra storage space, which can be problematic for massive memory-bound structures  
+❌ Slower than Quick Sort on average due to overhead in writing to temporary arrays  
+❌ Not in-place  
+`
+  },
+  {
+    id: "quick-sort",
+    title: "Quick Sort",
+    description: "Divide-and-conquer algorithm that partitions around a pivot and recursively sorts subarrays",
+    category: "sorting",
+    difficulty: "intermediate",
+    timeComplexity: "O(N log N)",
+    spaceComplexity: "O(log N)",
+    content: `
+# Quick Sort
+
+## What is Quick Sort?
+
+Quick Sort is a highly efficient, comparison-based sorting algorithm that uses a divide-and-conquer strategy. It operates by selecting a "pivot" element from the array and partitioning the other elements into two sub-arrays, according to whether they are less than or greater than the pivot. The sub-arrays are then sorted recursively.
+
+## How It Works
+
+1. **Choose Pivot:** Select an element from the array (e.g., first, last, median, or random).
+2. **Partition:** Reorder the array so that all elements smaller than the pivot go to its left, and all elements larger than the pivot go to its right. The pivot is now in its final sorted position.
+3. **Recurse:** Recursively apply the above steps to the left and right sub-arrays.
+
+## Time & Space Complexity
+
+- **Worst-case Time Complexity:** O(N²) when the pivot selection consistently yields highly unbalanced partitions (e.g., sorted array with first or last element as pivot).
+- **Average-case Time Complexity:** O(N log N) (extremely fast in practice).
+- **Best-case Time Complexity:** O(N log N) when partitions are perfectly balanced.
+- **Space Complexity:** O(log N) auxiliary space for the recursion call stack (using optimized implementations).
+
+## Pseudocode
+
+\`\`\`
+function quickSort(array, low, high):
+    if low < high:
+        pivotIndex = partition(array, low, high)
+        quickSort(array, low, pivotIndex - 1)
+        quickSort(array, pivotIndex + 1, high)
+
+function partition(array, low, high):
+    pivot = array[high] // Choosing the last element as pivot
+    i = low - 1
+    for j = low to high - 1:
+        if array[j] < pivot:
+            i = i + 1
+            swap(array[i], array[j])
+    swap(array[i + 1], array[high])
+    return i + 1
+\`\`\`
+
+## Advantages
+
+✅ Very fast on average - usually outperforms Merge Sort and Heap Sort in practice  
+✅ Sorts in-place (only requires log N stack space)  
+✅ Highly cache-friendly due to sequential access during partitioning  
+
+## Disadvantages
+
+❌ Worst-case time complexity is O(N²)  
+❌ Unstable sorting algorithm  
+❌ Performance depends heavily on pivot selection strategy  
 `
   }
 ];

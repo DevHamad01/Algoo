@@ -63,44 +63,45 @@ const About = () => {
           </h2>
           <div className="flex items-center justify-center gap-4">
             <div className="w-10 h-10 bg-gray-200 rounded-full overflow-hidden">
-              <img src="https://ui-avatars.com/api/?name=Alex+M&background=000&color=fff" alt="Founder" />
+              <img src="https://ui-avatars.com/api/?name=Dev+Hamad&background=000&color=fff" alt="Creator" />
             </div>
             <div className="text-left">
-              <p className="text-sm font-bold">Alex Morgan</p>
-              <p className="text-xs text-gray-500">Lead Designer</p>
+              <p className="text-sm font-bold">DevHamad</p>
+              <p className="text-xs text-gray-500">Creator & Lead Architect</p>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Meet the Team */}
-      <section className="py-24 px-6 md:px-12 max-w-[1400px] mx-auto">
-        <div className="flex flex-col md:flex-row justify-between items-start md:items-end mb-16 gap-6">
-          <div>
-            <h3 className="text-sm font-bold uppercase tracking-wider text-gray-400 mb-2">Team</h3>
-            <h2 className="text-4xl font-bold">Meet the creators</h2>
-          </div>
-          <p className="text-gray-500 max-w-md">
-            A multidisciplinary team of engineers, designers, and educators working together to redefine algorithmic learning.
+      {/* Meet the Creator */}
+      <section className="py-24 px-6 md:px-12 max-w-[1000px] mx-auto">
+        <div className="text-center mb-16">
+          <h3 className="text-sm font-bold uppercase tracking-wider text-gray-400 mb-2">Creator</h3>
+          <h2 className="text-4xl font-bold">Meet the mind behind Algoo</h2>
+          <p className="text-gray-500 max-w-md mx-auto mt-4">
+            A solo developer, designer, and architect dedicated to crafting the ultimate algorithmic visualization tool.
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-          {[
-            { name: "John Doe", role: "Frontend Dev", img: "https://ui-avatars.com/api/?name=John+D&background=eee&color=333" },
-            { name: "Sarah Smith", role: "Algorithm Expert", img: "https://ui-avatars.com/api/?name=Sarah+S&background=eee&color=333" },
-            { name: "Michael Chen", role: "UX Designer", img: "https://ui-avatars.com/api/?name=Michael+C&background=eee&color=333" },
-            { name: "Emily Davis", role: "Product Manager", img: "https://ui-avatars.com/api/?name=Emily+D&background=eee&color=333" },
-          ].map((member, i) => (
-            <div key={i} className="group cursor-pointer">
-              <div className="aspect-[3/4] bg-gray-100 rounded-2xl overflow-hidden mb-4 relative">
-                <img src={member.img} alt={member.name} className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-500" />
-                <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors" />
-              </div>
-              <h3 className="text-lg font-bold">{member.name}</h3>
-              <p className="text-sm text-gray-500">{member.role}</p>
+        <div className="bg-gray-50 border border-gray-150 rounded-3xl p-8 md:p-12 flex flex-col md:flex-row gap-8 md:gap-12 items-center hover:shadow-lg transition-all duration-300">
+          <div className="w-48 h-48 md:w-64 md:h-64 rounded-2xl overflow-hidden bg-gray-100 flex-shrink-0 relative border border-gray-200">
+            <img src="https://ui-avatars.com/api/?name=Dev+Hamad&background=000&color=fff&size=512" alt="DevHamad" className="w-full h-full object-cover" />
+          </div>
+          <div className="space-y-6 text-center md:text-left">
+            <div className="space-y-2">
+              <h3 className="text-3xl font-bold">DevHamad</h3>
+              <p className="text-lg text-gray-600 font-medium">Lead Developer, Designer & Architect</p>
             </div>
-          ))}
+            <p className="text-gray-500 leading-relaxed text-base">
+              DevHamad is the visionary and engineer behind Algoo. Driven by a passion for computer science and interface design, he single-handedly architected the system's pathfinding and sorting engines, created the modern visual aesthetics, and built the interactive learning curriculum.
+            </p>
+            <div className="flex flex-wrap gap-3 justify-center md:justify-start">
+              <span className="px-3 py-1 bg-white border border-gray-200 text-xs font-semibold rounded-full">React & TS</span>
+              <span className="px-3 py-1 bg-white border border-gray-200 text-xs font-semibold rounded-full">Firebase Auth</span>
+              <span className="px-3 py-1 bg-white border border-gray-200 text-xs font-semibold rounded-full">Algorithm Design</span>
+              <span className="px-3 py-1 bg-white border border-gray-200 text-xs font-semibold rounded-full">UI/UX</span>
+            </div>
+          </div>
         </div>
       </section>
 

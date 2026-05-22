@@ -19,6 +19,7 @@ import {
   Layers,
   Brain,
   ArrowRight,
+  ArrowUpDown,
 } from "lucide-react";
 import { useAuth } from "@/contexts/AuthContext";
 import { useState } from "react";
@@ -59,6 +60,30 @@ const Home = () => {
       category: "Pathfinding",
       icon: Zap,
       description: "Fast heuristic search",
+    },
+    {
+      name: "Bubble Sort",
+      shortName: "Bubble Sort",
+      difficulty: "Beginner",
+      category: "Sorting",
+      icon: ArrowUpDown,
+      description: "Repeatedly steps through the list, compares adjacent elements and swaps them",
+    },
+    {
+      name: "Merge Sort",
+      shortName: "Merge Sort",
+      difficulty: "Intermediate",
+      category: "Sorting",
+      icon: Layers,
+      description: "Divides list in half, recursively sorts halves, and merges them",
+    },
+    {
+      name: "Quick Sort",
+      shortName: "Quick Sort",
+      difficulty: "Intermediate",
+      category: "Sorting",
+      icon: Zap,
+      description: "Picks a pivot, partitions elements, and recursively sorts sub-arrays",
     },
   ];
 
@@ -277,42 +302,50 @@ const Home = () => {
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {algorithms.map((algo, index) => (
-              <Link
-                key={index}
-                to={`/visualizer?algorithm=${algo.shortName.toLowerCase()}`}
-                className="group"
-              >
-                <div className="bg-white border-2 border-gray-300 rounded-xl p-6 hover:border-black hover:shadow-2xl transition-all">
-                  <div className="flex justify-center mb-4">
-                    {algo.image ? (
-                      <img src={algo.image} alt={algo.name} className="w-32 h-32 object-contain grayscale" />
-                    ) : algo.icon ? (
-                      <div className="w-32 h-32 flex items-center justify-center bg-gray-100 rounded-xl">
-                        <algo.icon className="w-16 h-16 text-black" />
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+            {algorithms.map((algo, index) => {
+              const algoParam = algo.shortName.toLowerCase().replace(" sort", "");
+              const targetUrl = algo.category === "Sorting"
+                ? `/visualizers/sorting?algorithm=${algoParam}`
+                : `/visualizer?algorithm=${algo.shortName.toLowerCase()}`;
+              return (
+                <Link
+                  key={index}
+                  to={targetUrl}
+                  className="group"
+                >
+                  <div className="bg-white border-2 border-gray-300 rounded-xl p-6 hover:border-black hover:shadow-2xl transition-all h-full flex flex-col justify-between">
+                    <div>
+                      <div className="flex justify-center mb-4">
+                        {algo.image ? (
+                          <img src={algo.image} alt={algo.name} className="w-32 h-32 object-contain grayscale" />
+                        ) : algo.icon ? (
+                          <div className="w-32 h-32 flex items-center justify-center bg-gray-100 rounded-xl">
+                            <algo.icon className="w-16 h-16 text-black" />
+                          </div>
+                        ) : null}
                       </div>
-                    ) : null}
-                  </div>
-                  <div className="space-y-2">
-                    <div className="flex items-center justify-between">
-                      <h3 className="text-xl font-bold text-black">
-                        {algo.shortName}
-                      </h3>
-                      <span className="text-xs px-2 py-1 rounded-full font-semibold bg-gray-200 text-gray-800">
-                        {algo.difficulty}
-                      </span>
+                      <div className="space-y-2">
+                        <div className="flex items-center justify-between">
+                          <h3 className="text-xl font-bold text-black">
+                            {algo.shortName}
+                          </h3>
+                          <span className="text-xs px-2 py-1 rounded-full font-semibold bg-gray-200 text-gray-800">
+                            {algo.difficulty}
+                          </span>
+                        </div>
+                        <p className="text-sm text-gray-600">{algo.description}</p>
+                      </div>
                     </div>
-                    <p className="text-sm text-gray-600">{algo.description}</p>
-                    <div className="pt-2">
+                    <div className="pt-4 mt-auto">
                       <span className="text-xs text-gray-500 bg-gray-100 px-2 py-1 rounded">
                         {algo.category}
                       </span>
                     </div>
                   </div>
-                </div>
-              </Link>
-            ))}
+                </Link>
+              );
+            })}
           </div>
         </div>
       </section>
@@ -674,7 +707,6 @@ const Home = () => {
               <h4 className="font-semibold mb-4 text-lg">Learn</h4>
               <ul className="space-y-2 text-sm text-gray-400">
                 <li><Link to="/learn" className="hover:text-white transition-colors">Algorithms</Link></li>
-                <li><Link to="/tutorials" className="hover:text-white transition-colors">Tutorials</Link></li>
                 <li><Link to="/visualizer" className="hover:text-white transition-colors">Visualizer</Link></li>
                 <li><Link to="/dashboard" className="hover:text-white transition-colors">Dashboard</Link></li>
               </ul>

@@ -17,7 +17,6 @@ export const Navbar = () => {
     { to: "/visualizer", label: "Visualizer" },
     { to: "/visualizers/sorting", label: "Sorting" },
     { to: "/learn", label: "Learn" },
-    { to: "/tutorials", label: "Tutorials" },
     { to: "/about", label: "About" },
   ];
 
@@ -59,6 +58,18 @@ export const Navbar = () => {
             <div className="flex items-center gap-3 ml-4 border-l border-gray-200 pl-4">
               {user ? (
                 <>
+                  <div className="flex items-center gap-2 mr-2">
+                    {user.photoURL ? (
+                      <img src={user.photoURL} alt="Profile" className="w-6 h-6 rounded-full border border-gray-200" />
+                    ) : (
+                      <div className="w-6 h-6 rounded-full bg-black text-white flex items-center justify-center text-xs font-bold uppercase">
+                        {(user.displayName || user.email || "?")[0]}
+                      </div>
+                    )}
+                    <span className="text-xs font-semibold text-gray-700 max-w-[100px] truncate">
+                      {user.displayName || user.email?.split("@")[0]}
+                    </span>
+                  </div>
                   <NavLink to="/dashboard">
                     <Button variant="outline" size="sm" className="border-black hover:bg-gray-50">
                       <User className="w-4 h-4 mr-2" />

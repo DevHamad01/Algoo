@@ -12,7 +12,6 @@ import Visualizer from "./pages/Visualizer";
 import Sorting from "./pages/visualizers/Sorting";
 import Learn from "./pages/Learn";
 import AlgorithmDetail from "./pages/AlgorithmDetail";
-import Tutorials from "./pages/Tutorials";
 import About from "./pages/About";
 import Login from "./pages/auth/Login";
 import SignUp from "./pages/auth/SignUp";
@@ -37,7 +36,6 @@ const App = () => (
             <Route path="/forgot-password" element={<ForgotPassword />} />
             <Route path="/learn" element={<Learn />} />
             <Route path="/learn/:id" element={<AlgorithmDetail />} />
-            <Route path="/tutorials" element={<Tutorials />} />
             <Route path="/about" element={<About />} />
 
             {/* Public Visualizer (for demo) */}

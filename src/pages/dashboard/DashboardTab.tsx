@@ -4,38 +4,63 @@ import { Calendar } from "@/components/ui/calendar";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Progress } from "@/components/ui/progress";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { TrendingUp, Clock, CheckCircle2, MoreHorizontal, Plus } from "lucide-react";
-import { useState } from "react";
+import { TrendingUp, Clock, CheckCircle2, MoreHorizontal, Plus, X } from "lucide-react";
+import { useState, useEffect } from "react";
 
 export const DashboardTab = () => {
   const [date, setDate] = useState<Date | undefined>(new Date());
 
-  const tasks = [
-    {
-      id: 1,
-      title: "Complete Marketing Presentation",
-      description: "Update slides with your team members",
-      time: "10 PM",
-      status: "completed",
-      priority: "high",
-    },
-    {
-      id: 2,
-      title: "Finance Discussions",
-      description: "Prepare the annual income statement",
-      time: "2 PM",
-      status: "submitted",
-      priority: "medium",
-    },
-    {
-      id: 3,
-      title: "ERP in Businesses",
-      description: "Write a report on how erp leads to high efficiency",
-      time: "3:30 PM",
-      status: "incomplete",
-      priority: "low",
-    },
-  ];
+  const [tasks, setTasks] = useState(() => {
+    const saved = localStorage.getItem('dashboard_tasks');
+    if (saved) {
+      try {
+        return JSON.parse(saved) as any[];
+      } catch (e) {
+        console.error('Failed to parse tasks from localStorage', e);
+      }
+    }
+    // default tasks if none saved
+    return [];
+  });
+
+  // Persist tasks to localStorage whenever they change
+  useEffect(() => {
+    localStorage.setItem('dashboard_tasks', JSON.stringify(tasks));
+  }, [tasks]);
+
+  // Helper to add a new task (simple prompt based for demo)
+  const addTask = () => {
+    const title = window.prompt('Task title');
+    if (!title) return;
+    const description = window.prompt('Task description') ?? '';
+    const time = window.prompt('Time (e.g., 4 PM)') ?? '';
+    const newTask = {
+      id: Date.now(),
+      title,
+      description,
+      time,
+      status: 'incomplete',
+      priority: 'low',
+    };
+    setTasks((prev) => [...prev, newTask]);
+  };
+
+  const toggleStatus = (id: number) => {
+    setTasks((prev) =>
+      prev.map((t) =>
+        t.id === id
+          ? {
+              ...t,
+              status: t.status === 'completed' ? 'incomplete' : 'completed',
+            }
+          : t
+      )
+    );
+  };
+
+  const deleteTask = (id: number) => {
+    setTasks((prev) => prev.filter((t) => t.id !== id));
+  };
 
   return (
     <div className="space-y-8">
@@ -151,7 +176,7 @@ export const DashboardTab = () => {
                 <div className="bg-gray-100 text-gray-500 px-4 py-1.5 rounded-full text-sm font-medium">In Progress</div>
              </div>
 
-             <Button variant="outline" className="w-full justify-start border-dashed h-14 text-muted-foreground items-center gap-2">
+             <Button variant="outline" className="w-full justify-start border-dashed h-14 text-muted-foreground items-center gap-2" onClick={addTask}>
                 <Plus className="h-4 w-4" /> Add New Tasks
              </Button>
 
@@ -176,9 +201,7 @@ export const DashboardTab = () => {
                     <h4 className="font-semibold text-sm">{task.title}</h4>
                     <p className="text-xs text-muted-foreground">{task.description}</p>
                     <div className="flex items-center gap-4 mt-3">
-                         <div className={`px-3 py-0.5 rounded-full text-[10px] uppercase font-bold text-white ${
-                             task.status === "completed" ? "bg-black" : task.status === "submitted" ? "bg-black" : "bg-black"
-                         }`}>
+                         <div className={`cursor-pointer px-3 py-0.5 rounded-full text-[10px] uppercase font-bold text-white ${task.status === "completed" ? "bg-black" : task.status === "submitted" ? "bg-black" : "bg-black"}`} onClick={() => toggleStatus(task.id)}>
                              {task.status}
                          </div>
                          <Progress value={task.status === 'completed' ? 100 : task.status === 'submitted' ? 70 : 30} className="h-2 w-24" />
@@ -193,8 +216,8 @@ export const DashboardTab = () => {
                     </div>
                   </div>
                   
-                  <Button variant="ghost" size="icon" className="h-8 w-8">
-                     <MoreHorizontal className="h-4 w-4" />
+                  <Button variant="ghost" size="icon" className="h-8 w-8" onClick={() => deleteTask(task.id)}>
+                     <X className="h-4 w-4" />
                   </Button>
                 </div>
               ))}

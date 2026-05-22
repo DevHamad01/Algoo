@@ -57,8 +57,14 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
      */
     const signUp = async (email: string, password: string, displayName: string): Promise<void> => {
         try {
-            await authService.signUp(email, password, displayName);
-            // User state will be updated automatically by onAuthStateChanged
+            const firebaseUser = await authService.signUp(email, password, displayName);
+            setUser({
+                uid: firebaseUser.uid,
+                email: firebaseUser.email,
+                displayName: displayName,
+                photoURL: firebaseUser.photoURL,
+                emailVerified: firebaseUser.emailVerified,
+            });
         } catch (error) {
             throw error;
         }
@@ -71,6 +77,17 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
         try {
             await authService.signIn(email, password);
             // User state will be updated automatically by onAuthStateChanged
+        } catch (error) {
+            throw error;
+        }
+    };
+
+    /**
+     * Sign in with Google
+     */
+    const signInWithGoogle = async (): Promise<void> => {
+        try {
+            await authService.signInWithGoogle();
         } catch (error) {
             throw error;
         }
@@ -123,6 +140,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
         loading,
         signUp,
         signIn,
+        signInWithGoogle,
         signOut,
         resetPassword,
         updateUserProfile,

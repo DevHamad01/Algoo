@@ -39,6 +39,8 @@ const AlgorithmDetail = () => {
         return "bg-accent/10 text-accent border-accent/20";
       case "tree":
         return "bg-secondary/50 text-secondary-foreground border-secondary";
+      case "sorting":
+        return "bg-blue-500/10 text-blue-700 border-blue-500/20";
       default:
         return "bg-muted text-muted-foreground";
     }
@@ -59,7 +61,11 @@ const AlgorithmDetail = () => {
 
   const handleTryInVisualizer = () => {
     // Navigate to visualizer with pre-selected algorithm
-    navigate(`/visualizer?algorithm=${algorithm.id}`);
+    if (algorithm.category === "sorting") {
+      navigate(`/visualizers/sorting?algorithm=${algorithm.id}`);
+    } else {
+      navigate(`/visualizer?algorithm=${algorithm.id}`);
+    }
   };
 
   return (

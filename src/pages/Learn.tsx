@@ -23,6 +23,8 @@ const Learn = () => {
         return "bg-accent/10 text-accent border-accent/20";
       case "tree":
         return "bg-secondary/50 text-secondary-foreground border-secondary";
+      case "sorting":
+        return "bg-blue-500/10 text-blue-700 border-blue-500/20";
       default:
         return "bg-muted text-muted-foreground";
     }
@@ -50,7 +52,7 @@ const Learn = () => {
             Learn Algorithms
           </h1>
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-            Master pathfinding and graph algorithms with detailed explanations, complexity analysis, and code examples
+            Master pathfinding, graph, and sorting algorithms with detailed explanations, complexity analysis, and code examples
           </p>
         </div>
 
